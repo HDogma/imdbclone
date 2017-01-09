@@ -1,0 +1,15 @@
+.errorlist {
+    color:red;
+}
+
+select {
+    width: 300px;
+}
+
+.date {
+    width: 300px;
+}
+
+.btn {
+    background-color: crimson;
+}

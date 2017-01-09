@@ -1,0 +1,15 @@
+click==6.6
+defusedxml==0.4.1
+Django==1.9.5
+django-allauth==0.25.2
+django-cleanup==0.4.2
+django-datetime-widget==0.9.3
+django-embed-video==1.1.0
+django-tinymce==2.4.0
+django-watson==1.2.3
+gunicorn==19.6.0
+oauthlib==1.1.1
+Pillow==3.4.1
+requests==2.10.0
+requests-oauthlib==0.6.1
+whitenoise==3.2.2

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block title %}{{ block.super }} - Error 500{% endblock title %}
+
+{% block style %}
+{{ block.super }}
+{% endblock style %}
+
+
+{% block content %}
+
+{% include "main/messages.html" %}
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="bs-component">
+                    <div class="jumbotron">
+                        <h3>500</h3>
+                        <h1>Ups! Es ist ein Fehler aufgetretten :(</h1>
+                        <p><a href="{% url 'home' %}" class="btn btn-primary btn-lg">Zur Startseite zurück</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+{% endblock %}

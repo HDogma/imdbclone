@@ -1,0 +1,31 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+{% load account %}
+
+{% block head_title %}{% trans "Bestätigung Ihrer E-mail Addresse" %}{% endblock %}
+
+
+{% block account %}
+<h1>{% trans "Bestätigung Ihrer E-mail Addresse" %}</h1>
+
+{% if confirmation %}
+
+{% user_display confirmation.email_address.user as user_display %}
+
+<p>{% blocktrans with confirmation.email_address.email as email %}Bitte bestätigen Sie, dass Sie folgende E-Mail Adresse <a href="mailto:{{ email }}">{{ email }}</a> zum Benutzer "{{ user_display }}" gehört.{% endblocktrans %}</p>
+
+<form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
+{% csrf_token %}
+    <button type="submit" class="btn btn-primary btn-md">{% trans 'Bestätigen' %}</button>
+</form>
+
+{% else %}
+
+{% url 'account_email' as email_url %}
+
+<p>{% blocktrans %}Sollte der Bestätigungslink abgelaufen oder inkorrekt sein,  <a href="{{ email_url }}">wiederholen Sie bitte Ihre Anfrage</a>.{% endblocktrans %}</p>
+
+{% endif %}
+
+{% endblock %}

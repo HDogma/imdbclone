@@ -1,0 +1,42 @@
+    {% load static from staticfiles %}
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header" name="top">
+          <a href="{% url 'home' %}" class="pull-left"><img src="{% static 'img/logo.png' %}"></a>
+          <a href="{% url 'home' %}" class="pull-left"><span class="navbar-brand"> PythonIMDBAdvanced</span></a>
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+          <ul class="nav navbar-nav">
+            <li>
+                <a href="/movies">Filmübersicht</a>
+            </li>
+            <li>
+                <a href="/movie/new" id="themes">Film anlegen</a>
+            </li>
+          </ul>
+
+          <ul class="nav navbar-nav navbar-right">
+            {% if request.user.is_authenticated %}
+            <li><a href="{% url 'profile_edit' %}"><i class="fa fa-cogs" aria-hidden="true"></i> {{ request.user.email }}</a></li>
+            <li><a href="/accounts/logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
+            {% else %}
+            <li><a href="/accounts/signup">Registrieren</a></li>
+            <li><a href="/accounts/login"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a></li>
+            {% endif %}
+          </ul>
+
+          <form class="navbar-form navbar-right" role="search" action="{% url 'watson:search' %}">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Hier suchen..." name="q" value="{{request.GET.q}}">
+            </div>
+            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+          </form>
+
+        </div>
+      </div>
+    </nav>

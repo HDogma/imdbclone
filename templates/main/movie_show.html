@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+{% load embed_video_tags %}
+
+{% block title %}{{ block.super }} - Movie Detail{% endblock title %}
+
+{% block style %}
+{{ block.super }}
+    <link rel="stylesheet" href="{% static "css/detail.css" %}" />
+    <link rel="stylesheet" href="{% static "css/lightbox.css" %}" />
+{% endblock style %}
+
+{% block content %}
+    <div class="row">
+
+        {% include "main/messages.html" %}
+
+        <div class="col-md-9">
+                <h3>
+                    {% if fav %}
+                    <a href="{% url 'unlike_movie' movie.id %}" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></a>
+                    {% else %}
+                    <a href="{% url 'like_movie' movie.id %}" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span></a>
+                    {% endif %}
+                    {{ movie.name }} - {{ movie.created_at }}
+                </h3>
+                {% load i18n %}
+                <span>Genre: {% for genre in movie.moviegenre_set.all %}{{ genre.genre.name }}, {% endfor %}</span><br>
+                {% include "main/share.html" %}
+                {% if movie.logo %}
+                    <img class="img img-responsive" src="{{ movie.logo.url }}" style="margin-top: 10px"/>
+                {% endif %}
+                <div class="col-md-12 context">
+                <p>
+                    {{ movie.description|safe }}
+                </p>
+                </div>
+
+                {% if movie.video_url %}
+                    <div class="col-md-12" id="proj-vid">
+                        {% video movie.video_url '100% x 100%' %}
+                    </div>
+                {% endif %}
+
+                <div class="col-md-12" id="proj-img">
+                    {% if movie.movieimage_set.all %}
+                        <h3>Filmbilder</h3>
+                        {%  for images in movie.movieimage_set.all %}
+                        <a href="{{ images.image.url }}" data-lightbox="Projekt Bilder" data-title="Projekt Bilder" class="moviepic" style="background-image: url({{ images.image.url }});"></a>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+                <h3>Kommentare</h3>
+                {% if user.is_authenticated %}
+                <div class="col-md-12">
+                    <form class="form-horizontal" enctype="multipart/form-data" method="POST" action="{% url 'comment' movie.id %}">
+                        <fieldset>
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="{{ comment_form.comment.id_for_label }}" class="col-lg-2 control-label">{{ comment_form.comment.label_tag }}</label>
+                                <div class="col-lg-10">
+                                    {{ comment_form.comment }}
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-md edit">Kommentieren</button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+                {% endif %}
+                {% if movie.comments_set.all %}
+                <div class="col-md-12 comments">
+                    {% for comment in movie.comments_set.all %}
+                        <div class="col-md-2 profile">
+                            <a href="{% url 'profile_show' comment.user.id %}">
+                            {% if comment.user.profile.picture %}
+                                <div class="profile-img" style="background-image: url({{ comment.user.profile.picture.url }})"></div>
+                            {% else %}
+                                <div class="profile-img" style="background-image: url({% static 'img/placeholder.png' %})"></div>
+                            {% endif %}
+                            </a>
+                        </div>
+                        {% if user.moderator.is_moderator %}
+                            <form class="form-horizontal" enctype="multipart/form-data" method="POST" action="{% url 'commentEdit' movie.id comment.id %}">
+                                <fieldset>
+                                {% csrf_token %}
+                                <div class="col-lg-10 comment">
+                                    <a href="{% url 'profile_show' comment.user.id %}"> <h6>{{ comment.user }}</h6></a>
+                                    {{ comment.comment }}
+                                    <div class="line-separator"></div>
+                                    <h5>Edit Comment:</h5>
+                                    {{ comment_edit.comment }}
+                                    <button type="submit" class="btn btn-primary btn-sm edit">Editieren</button>
+                                </div>
+                                </fieldset>
+                            </form>
+                        {% else %}
+                            <div class="col-lg-10 comment">
+                                <a href="{% url 'profile_show' comment.user.id %}"> <h6>{{ comment.user }}</h6></a>
+                                {{ comment.comment }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+        </div>
+    </div>
+<script type="text/javascript" src="{% static "js/lightbox.js" %}"></script>
+{% endblock content %}

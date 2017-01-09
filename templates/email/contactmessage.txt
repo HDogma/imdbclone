@@ -1,0 +1,13 @@
+Hallo {{ name }},
+
+{{ sender }} ({{ sender_email }}) hat Ihnen über Fundiea eine neue Nachricht gesendet:
+
+Nachricht:
+------------
+{{message}}
+------------
+
+Bitte benutzen Sie die in der Nachricht angegebene E-Mail Adresse, um auf diese Nachricht zu antworten.
+
+Mit freundlichen Grüßen,
+Ihr PythonIMDBAdnvanced Team

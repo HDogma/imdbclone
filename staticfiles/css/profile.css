@@ -1,0 +1,40 @@
+#profile {
+    width: 250px;
+    height: 250px;
+    line-height: 1.6;
+}
+
+
+.profile-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: white;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    box-shadow: 2px 2px 8px rgba(45, 45, 45, 0.36);
+
+}
+
+.img{
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    box-shadow: 2px 2px 8px rgba(45, 45, 45, 0.36);
+}
+
+.pic-lg {
+    padding: 0;
+    width: 240px;
+    height: 135px;
+    margin: 5px 5px 70px 5px;
+    text-align: center;
+}
+
+.btn {
+    background-color: crimson;
+}

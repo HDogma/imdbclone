@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block title %}{{ block.super }} - Error 401{% endblock title %}
+
+{% block style %}
+{{ block.super }}
+{% endblock style %}
+
+
+{% block content %}
+
+{% include "main/messages.html" %}
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="bs-component">
+                    <div class="jumbotron">
+                        <h3>404</h3>
+                        <h1>Ups! Da ist wohl was schief gelaufen.</h1>
+                        <p>Der gesuchte Inhalt konnte nicht gefunden werden.</p>
+                        <p><a href="{% url 'home' %}" class="btn btn-primary btn-lg">Zur Startseite zurück</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+{% endblock %}

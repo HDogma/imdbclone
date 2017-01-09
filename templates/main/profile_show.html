@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block title %}{{ block.super }} -  {{ user.get_full_name }}{% endblock title %}
+
+{% block style %}
+{{ block.super }}
+    <link rel="stylesheet" href="{% static "css/profile.css" %}" />
+{% endblock style %}
+
+{% block content %}
+    <div class="row">
+
+    {% include "main/messages.html" %}
+
+        <div class="col-md-9">
+                <h3>{{ user.first_name }} {{ user.last_name }}</h3>
+
+            <div class="col-md-12">
+            <h4>Über mich</h4>
+
+            <p>{{ user.profile.biography|safe }}</p>
+
+            </div>
+            {% if fav %}
+                <div class="col-md-12" >
+                    <h4>Favorite Movies</h4>
+                    {% for favmovie in fav %}
+                            <div class="col-md-4" >
+                                <div class="pic-lg">
+                                <a href="{% url 'showMovie' favmovie.movie.id %}">
+                                    <div style="background-image: url({{ favmovie.movie.logo.url }})" class="img"></div>
+                                    {{ favmovie.movie.name }}
+                                </a>
+                                </div>
+                            </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="col-md-3" >
+            <div id="profile">
+                {% if user.profile.picture %}
+                    <div class="profile-img" style="background-image: url({{ user.profile.picture.url }})"></div>
+                {% else %}
+                    <div class="profile-img" style="background-image: url({% static 'img/placeholder.png' %})"></div>
+                {% endif %}
+            </div>
+            <button type="button" class="btn btn-primary btn-lg" id="btn" data-toggle="modal" data-target=".modal" style="width: 100%; margin-top: 10px;">Benutzer kontaktieren</button>
+
+        </div>
+
+
+
+</div>
+
+{% include "main/contact.html" %}
+{% endblock content %}

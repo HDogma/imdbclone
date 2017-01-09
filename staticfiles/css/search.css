@@ -1,0 +1,33 @@
+.panel-heading h3 {
+    height: 32px;
+    text-overflow: ellipsis;
+}
+
+.panel-primary>.panel-heading {
+    background-color: crimson;
+}
+
+.movie {
+    box-shadow: 2px 2px 8px rgba(45, 45, 45, 0.36);
+    background-color: white;
+}
+
+.movie li {
+    font-size: 4em;
+}
+
+.moviepic {
+    min-width: 100%;
+    min-height: 150px;
+    max-height: 150px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.movieinfo {
+    padding-top: 1%;
+    padding-left: 3%;
+    padding-right: 3%;
+
+}

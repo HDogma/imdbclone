@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block title %}{{ block.super }} - Suchergebnisse{% endblock title %}
+
+{% block style %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static "css/search.css" %}" />
+{% endblock style %}
+
+
+{% block content %}
+
+{% load watson %}
+    <body>
+        <h3>Suchergebnisse{% if query %} für &ldquo;{{query}}&rdquo;{% endif %}</h3>
+        {% if search_results %}
+             <div class="row">
+                {% for search_result in search_results %}
+                        <a href="{% url 'showMovie' search_result.id %}">
+                            <div class="col-md-3">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">{{ search_result.title }}</h3>
+                                    </div>
+                                    <div class="moviepic" style="background-image: url({{  search_result.object.logo.url }});"></div>
+                                    <div class="movieinfo">
+                                        {{ search_result.object.description_short }}
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                {% endfor %}
+                </div>
+        {% else %}
+            {% if query %}
+                <p><em>Ihre Suchanfrage konnte nicht gefunden werden.</em></p>
+                <p><em>Versuchen Sie es mit weniger spezifischen Suchanfragen erneut.</em></p>
+            {% else %}
+                <p><em>Bitte geben Sie etwas im Suchfeld ein.</em></p>
+            {% endif %}
+        {% endif %}
+{% endblock %}

@@ -1,0 +1,9 @@
+{% load account %}{% user_display user as user_display %}{% load i18n %}{% autoescape off %}{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Sie erhalten diese E-Mail von {{ site_name }}!
+
+Bei der Registrierung Ihres Kontos {{ user_display }} auf {{ site_domain }} wurde diese E-Mail hinterlegt. Um den Registrierungsprozess abzuschließen, müssen Sie diese bestätigen.
+
+Zur Bestätigung folgen Sie bitte diesen Link: {{ activate_url }}
+{% endblocktrans %}{% endautoescape %}
+Mit freundlichen Grüßen,
+{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Ihre akademische Crowdfunding-Plattform
+{% endblocktrans %}

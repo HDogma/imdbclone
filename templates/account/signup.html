@@ -1,0 +1,23 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+
+{% block title %}{{ block.super }} -  Registrieren{% endblock %}
+
+{% block account %}
+<h1>{% trans "Registrieren" %}</h1>
+
+<p>{% blocktrans %}Besitzen Sie bereits ein Konto? <a href="{{ login_url }}">Login</a>.{% endblocktrans %}</p>
+
+<form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+  {% csrf_token %}
+  <table>
+    {{ form.as_table }}
+  </table>
+  {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+  <button type="submit" class="primaryAction btn btn-primary btn-md">{% trans "Registrieren" %} &raquo;</button>
+</form>
+
+{% endblock %}

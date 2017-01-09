@@ -1,0 +1,12 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Bestätigen Sie ihre E-Mail Adresse" %}{% endblock %}
+
+{% block account %}
+    <h1>{% trans "Bestätigen Sie ihre E-Mail Adresse" %}</h1>
+
+    <p>{% blocktrans %}Wir haben Ihnen eine E-Mail zur Verifikation geschickt. Bitte bestätigen Sie Ihre Anmeldung mit dem Link in der E-Mail. Sollten Sie keine E-Mail innerhalb von ein paar Minuten erhalten haben, setzen Sie sich bitte mit uns in Verbindung.{% endblocktrans %}</p>
+
+{% endblock %}

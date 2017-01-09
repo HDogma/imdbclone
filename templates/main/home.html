@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block title %}{{ block.super }} - Home{% endblock title %}
+
+{% block style %}
+{{ block.super }}
+    <link rel="stylesheet" href="{% static "css/home.css" %}" />
+{% endblock style %}
+
+{% block content %}
+
+    {% include "main/messages.html" %}
+<div class="row">
+    <div class="container">
+        {% for movie in movies %}
+            <div class="col-md-3">
+                <a href="{% url 'showMovie' movie.id %}">
+                    <div class="col-md-2">
+
+                    </div>
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">{{ movie.name }} - {{ movie.created_at }}</h3>
+                            </div>
+                            <div class="moviepic" style="background-image: url({{ movie.logo.url }});"></div>
+                            <div class="movieinfo">
+                                {{ movie.description_short }}
+                            </div>
+                        </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}
+
