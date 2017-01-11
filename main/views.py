@@ -126,7 +126,7 @@ def addMovie(request):
             return redirect('addMoviesMedia', movie.id)
         else:
             messages.error(request, 'Fehler beim Speichern des Filmes. Bitte überprüfen Sie alle Felder.')
-            return render(request, 'main/movie_new.html', {'movie_form': movie_form, 'genre_form': genre_form})
+            return render(request, 'main/movie_new.html', {'movie_form': movie_form})
     else:
         context = {
             'movie_form': MovieForm(),

@@ -54,15 +54,6 @@ class FavMovies(models.Model):
         unique_together = ["movie", "user"]
 
 
-class MovieRating(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    movie = models.OneToOneField(Movies, on_delete=models.CASCADE)
-    rating = models.IntegerField
-
-    class Meta:
-        unique_together = ["movie", "user"]
-
-
 class Genre(models.Model):
     name = models.CharField(max_length=90)
 
@@ -70,6 +61,29 @@ class Genre(models.Model):
         return "{name}".format(
             name=self.name
         )
+
+
+class MovieRating(models.Model):
+    NEUTRAL = 0
+    VERY_BAD = 1
+    BAD = 2
+    OK = 3
+    GOOD = 4
+    VERY_GOOD = 5
+    RATING_CHOICES = (
+        (NEUTRAL, '0'),
+        (VERY_BAD, '1'),
+        (BAD, '2'),
+        (OK, '3'),
+        (GOOD, '4'),
+        (VERY_GOOD, '5'),
+    )
+    movie = models.ForeignKey(Movies, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    rating = models.IntegerField(choices=RATING_CHOICES, default=NEUTRAL)
+
+    class Meta:
+        unique_together = ["movie", "user"]
 
 
 class MovieGenre(models.Model):
