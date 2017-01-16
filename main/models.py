@@ -45,6 +45,10 @@ class Movies(models.Model):
         for movies in instance.movies_set.all():
             watson.default_search_engine.update_obj_index(movies)
 
+    @property
+    def rating(self):
+        return MovieRating.objects.filter(movie=self)
+
 
 class FavMovies(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

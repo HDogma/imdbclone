@@ -4,7 +4,7 @@ from django.forms import inlineformset_factory, FileInput, CheckboxSelectMultipl
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from main.forms import MovieForm, ContactForm, ProfileEditForm, CommentsForm, CommentsEditForm
+from main.forms import MovieForm, ContactForm, ProfileEditForm, CommentsForm, CommentsEditForm, MovieRatingForm
 from main.models import Movies, MovieImage, FavMovies, Comments, Genre, MovieGenre
 from django.contrib.auth.models import User
 from django.template.loader import render_to_string
@@ -28,6 +28,7 @@ def showMovie(request, movie_id):
             'movie': movie,
             'comment_form': CommentsForm(),
             'fav': FavMovies.objects.filter(user__id=request.user.id, movie__id=movie_id),
+            'rating': MovieRatingForm(),
         }
         return render(request, template_name='main/movie_show.html', context=context)
     else:
@@ -38,6 +39,7 @@ def showMovie(request, movie_id):
                 'comment_form': CommentsForm(),
                 'comment_edit': CommentsEditForm(),
                 'fav': FavMovies.objects.filter(user__id=request.user.id, movie__id=movie_id),
+                'rating': MovieRatingForm(),
             }
             return render(request, template_name='main/movie_show.html', context=context)
 

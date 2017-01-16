@@ -26,6 +26,16 @@
                     {{ movie.name }} - {{ movie.created_at }}
                 </h3>
                 {% load i18n %}
+                <form class="form-horizontal" enctype="multipart/form-data" method="POST" action="">
+                    <fieldset>
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <div class="col-md-4">
+                        {{ rating.rating }}
+                        <button type="submit" class="btn btn-primary btn-sm edit">Rate</button>
+                        </div>
+                    </div>
+                    </fieldset>
                 <span>Genre: {% for genre in movie.moviegenre_set.all %}{{ genre.genre.name }}, {% endfor %}</span><br>
                 {% include "main/share.html" %}
                 {% if movie.logo %}

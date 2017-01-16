@@ -3,7 +3,7 @@ from django.forms import FileInput
 from tinymce.widgets import TinyMCE
 import datetime
 from datetimewidget.widgets import DateWidget
-from main.models import Profile, Movies, Comments, Genre
+from main.models import Profile, Movies, Comments, Genre, MovieRating
 
 DATE_FORMATS = [
     '%d.%m.%Y'
@@ -84,3 +84,12 @@ class ProfileEditForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['biography', 'picture']
+
+
+class MovieRatingForm(forms.ModelForm):
+
+    rating = forms.ChoiceField(choices = MovieRating.RATING_CHOICES, label="", initial='', widget=forms.Select(), required=False)
+
+    class Meta:
+        model = MovieRating
+        fields = ['rating']
