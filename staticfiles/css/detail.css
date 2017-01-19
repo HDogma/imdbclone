@@ -122,6 +122,11 @@
 
 .edit {
     margin-bottom: 10px;
-    float:right;
+    float:left;
     background-color: crimson;
+}
+
+.edit_span {
+    float:left;
+    margin-right: 5px;
 }

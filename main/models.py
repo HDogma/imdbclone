@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models.signals import post_save
+from django.db.models import Avg
 from django.contrib.auth.models import User
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
@@ -47,7 +47,18 @@ class Movies(models.Model):
 
     @property
     def rating(self):
-        return MovieRating.objects.filter(movie=self)
+        p = MovieRating.objects.filter(movie=self).aggregate(Avg('rating'))
+        p1 = str(p)
+        p2 = p1.split(':')[1]
+        p2 = p2.split('}')[0]
+        if p2 == ' None':
+            return 'None'
+        else:
+            return p2
+
+    @property
+    def votes(self):
+        return MovieRating.objects.filter(movie=self).count()
 
 
 class FavMovies(models.Model):

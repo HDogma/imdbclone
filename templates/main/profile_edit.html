@@ -53,15 +53,14 @@
             </fieldset>
         </form>
 
-        {% if user.projectmember_set.all %}
+        {% if fav %}
             <div class="col-md-12 profile" >
                 <h4>Meine Favoriten</h4>
-                {% for favmovie in user.favmovies_set.all %}
+                {% for favmovie in fav %}
                  <div class="col-md-3" >
-                     <a href="{% url 'exit_project' favmovie.movie.id%}" class="btn btn-danger btn-sm">Nicht mehr favorisieren</a>
                      <div class=" pic-lg">
-                         <a href="{% url 'project_show' favmovie.movie.id %}">
-                            <div style="background-image: url({{ projectmember.project.logo.url }})" class="img"></div>
+                         <a href="{% url 'showMovie' favmovie.movie.id %}">
+                            <div style="background-image: url({{ favmovie.movie.logo.url }})" class="img"></div>
                              {{ favmovie.movie.name }}
                          </a>
                      </div>
@@ -69,22 +68,6 @@
                 {% endfor %}
             </div>
         {% endif %}
-
-        {% if user.supervisor.is_supervisor %}
-                {% if project %}
-                    <div class="col-md-12 profile" >
-                        <h4>Betreute Projekte</h4>
-                        {% for project in project %}
-                            <div class="col-md-3 pic-lg" >
-                                <a href="{% url 'project_show' project.id %}">
-                                    <div style="background-image: url({{ project.logo.url }})" class="img"></div>
-                                    {{ project.name }}
-                                </a>
-                            </div>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-            {% endif %}
 
     </div>
 </div>

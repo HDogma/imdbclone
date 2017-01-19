@@ -26,16 +26,17 @@
                     {{ movie.name }} - {{ movie.created_at }}
                 </h3>
                 {% load i18n %}
-                <form class="form-horizontal" enctype="multipart/form-data" method="POST" action="">
+                <form class="form-horizontal" enctype="multipart/form-data" method="POST" action="{% url 'rate_movie' movie.id %}">
                     <fieldset>
                     {% csrf_token %}
                     <div class="form-group">
-                        <div class="col-md-4">
-                        {{ rating.rating }}
+                        <div class="col-sm-4">
+                            <span class="edit_span">Rating: {{ movie.rating }} | Votes: {{ movie.votes }} {{ rating.rating }}</span>
                         <button type="submit" class="btn btn-primary btn-sm edit">Rate</button>
                         </div>
                     </div>
                     </fieldset>
+                </form>
                 <span>Genre: {% for genre in movie.moviegenre_set.all %}{{ genre.genre.name }}, {% endfor %}</span><br>
                 {% include "main/share.html" %}
                 {% if movie.logo %}
@@ -97,7 +98,11 @@
                                 {% csrf_token %}
                                 <div class="col-lg-10 comment">
                                     <a href="{% url 'profile_show' comment.user.id %}"> <h6>{{ comment.user }}</h6></a>
-                                    {{ comment.comment }}
+                                    {% if comment.is_moderatored %}
+                                    <strong>Moderator edit: </strong>{{ comment.comment }}
+                                    {% else %}
+                                        {{ comment.comment }}
+                                    {% endif %}
                                     <div class="line-separator"></div>
                                     <h5>Edit Comment:</h5>
                                     {{ comment_edit.comment }}
@@ -108,7 +113,11 @@
                         {% else %}
                             <div class="col-lg-10 comment">
                                 <a href="{% url 'profile_show' comment.user.id %}"> <h6>{{ comment.user }}</h6></a>
-                                {{ comment.comment }}
+                                {% if comment.is_moderatored %}
+                                <strong>Moderator edit: </strong>{{ comment.comment }}
+                                {% else %}
+                                    {{ comment.comment }}
+                                {% endif %}
                             </div>
                         {% endif %}
                     {% endfor %}

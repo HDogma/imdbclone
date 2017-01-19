@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^movie/(?P<movie_id>[0-9]+)', views.showMovie, name='showMovie'),
     url(r'^profiles/(?P<user_id>[0-9]+)/contact', views.profile_contact, name='profile_contact'),
     url(r'^profile/(?P<movie_id>[0-9]+)/delete', views.unlike_movie, name='unlike_movie'),
+    url(r'^profile/(?P<movie_id>[0-9]+)/rate', views.rate_movie, name='rate_movie'),
     url(r'^profiles/(?P<user_id>[0-9]+)', views.profile_show, name='profile_show'),
     url(r'^profile/', views.profile_edit, name='profile_edit'),
     url(r'^search/', include("watson.urls", namespace="watson")),

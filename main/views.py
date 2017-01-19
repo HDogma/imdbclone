@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from main.forms import MovieForm, ContactForm, ProfileEditForm, CommentsForm, CommentsEditForm, MovieRatingForm
-from main.models import Movies, MovieImage, FavMovies, Comments, Genre, MovieGenre
+from main.models import Movies, MovieImage, FavMovies, Comments, Genre, MovieGenre, MovieRating
 from django.contrib.auth.models import User
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
@@ -107,6 +107,7 @@ def profile_edit(request):
     else:
         context = {
             'profileedit_form': ProfileEditForm(instance=request.user.profile),
+            'fav': FavMovies.objects.filter(user__id=request.user.id),
         }
         return render(request=request, template_name='main/profile_edit.html', context=context)
 
@@ -164,6 +165,7 @@ def comment(request, movie_id):
         if comment_form.is_valid():
             Comments.objects.create (
                 comment = comment_form.cleaned_data['comment'],
+                is_moderatored = False,
                 user = request.user,
                 movie = movie
             )
@@ -183,7 +185,8 @@ def commentEdit(request, movie_id, comment_id):
         comment_form = CommentsForm(request.POST)
         comment = get_object_or_404(Comments, id=comment_id)
         if comment_form.is_valid():
-            comment.comment = 'Moderator Edit: '+comment_form.cleaned_data['comment']
+            comment.comment = comment_form.cleaned_data['comment']
+            comment.is_moderatored = True
             comment.save()
             messages.success(request, 'Erfolgreich editiert.')
             return redirect('showMovie', movie.id)
@@ -192,6 +195,33 @@ def commentEdit(request, movie_id, comment_id):
             return render(request, 'main/movie_show.html', {'comment_form': comment_form})
     else:
         return redirect('showMovie', movie_id)
+
+
+@login_required
+def rate_movie(request, movie_id):
+    movie = get_object_or_404(Movies, id=movie_id)
+    if request.method == 'POST':
+        rating_form = MovieRatingForm(request.POST)
+        if rating_form.is_valid():
+            if request.user in [movierating.user for movierating in movie.movierating_set.all()]:
+                messages.error(request, 'Sie haben schon eine Bewertung abgegeben.')
+                return redirect('showMovie', movie.id)
+            else:
+                MovieRating.objects.create(
+                    movie = movie,
+                    user = request.user,
+                    rating = rating_form.cleaned_data['rating']
+                )
+                messages.success(request, 'Erfolgreich bewertet.')
+                return redirect('showMovie', movie.id)
+        else:
+            return redirect('showMovie', movie.id)
+    else:
+        return redirect('showMovie', movie.id)
+
+
+
+
 
 
 @login_required
