@@ -1,7 +1,7 @@
 from allauth.account.decorators import verified_email_required
 from django.contrib.auth.decorators import login_required
-from django.forms import inlineformset_factory, FileInput, CheckboxSelectMultiple
-from django.http import HttpResponse
+from django.forms import inlineformset_factory, FileInput
+from django.contrib.syndication.views import Feed
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from main.forms import MovieForm, ContactForm, ProfileEditForm, CommentsForm, CommentsEditForm, MovieRatingForm
@@ -9,6 +9,8 @@ from main.models import Movies, MovieImage, FavMovies, Comments, Genre, MovieGen
 from django.contrib.auth.models import User
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
+from django.core.urlresolvers import reverse
+
 
 
 def home(request):
@@ -258,3 +260,21 @@ def imprint(request):
 
 def legal(request):
     return render(request=request, template_name='main/legal.html')
+
+
+class LatestMovieFeed(Feed):
+    title = "Neuesten Filme"
+    link = "/rss/"
+    description = "Die neuesten Filme werden hier angezeigt."
+
+    def items(self):
+        return Movies.objects.order_by('-created_at')[:5]
+
+    def item_title(self, item):
+        return item.name
+
+    def item_description(self, item):
+        return item.description
+
+    def item_link(self, item):
+        return reverse('showMovie', args=[item.pk])

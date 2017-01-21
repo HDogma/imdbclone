@@ -1,4 +1,6 @@
 from django.conf.urls import url, include
+
+from main.views import LatestMovieFeed
 from . import views
 
 urlpatterns = [
@@ -18,4 +20,5 @@ urlpatterns = [
     url(r'^search/', include("watson.urls", namespace="watson")),
     url(r'^imprint/', views.imprint, name='imprint'),
     url(r'^legal/', views.legal, name='legal'),
+    url(r'^rss/movie/$', LatestMovieFeed()),
 ]
