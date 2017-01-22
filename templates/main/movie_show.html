@@ -37,7 +37,6 @@
                     </div>
                     </fieldset>
                 </form>
-                <span>Genre: {% for genre in movie.moviegenre_set.all %}{{ genre.genre.name }}, {% endfor %}</span><br>
                 {% include "main/share.html" %}
                 {% if movie.logo %}
                     <img class="img img-responsive" src="{{ movie.logo.url }}" style="margin-top: 10px"/>

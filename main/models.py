@@ -69,15 +69,6 @@ class FavMovies(models.Model):
         unique_together = ["movie", "user"]
 
 
-class Genre(models.Model):
-    name = models.CharField(max_length=90)
-
-    def __str__(self):
-        return "{name}".format(
-            name=self.name
-        )
-
-
 class MovieRating(models.Model):
     NEUTRAL = 0
     VERY_BAD = 1
@@ -101,20 +92,11 @@ class MovieRating(models.Model):
         unique_together = ["movie", "user"]
 
 
-class MovieGenre(models.Model):
-    movie = models.ForeignKey(Movies, on_delete=models.CASCADE)
-    genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
-
-    class Meta:
-        unique_together = ["movie", "genre"]
-
-
 class Comments(models.Model):
     movie = models.ForeignKey(Movies, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     comment = models.TextField(max_length=3000, blank=True)
     is_moderatored = models.BooleanField()
-
 
 
 class MovieImage(models.Model):

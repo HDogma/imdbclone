@@ -75,7 +75,7 @@ ACCOUNT_EMAIL_REQUIRED=True
 ACCOUNT_AUTHENTICATION_METHOD="email"
 ACCOUNT_SIGNUP_FORM_CLASS = 'main.forms.SignupForm'
 LOGIN_REDIRECT_URL='/'
-#ACCOUNT_ADAPTER = 'main.forms.ValidatingEmailField'
+
 
 #Django-tinymce settings
 TINYMCE_DEFAULT_CONFIG = {

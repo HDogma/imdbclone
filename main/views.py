@@ -222,10 +222,6 @@ def rate_movie(request, movie_id):
         return redirect('showMovie', movie.id)
 
 
-
-
-
-
 @login_required
 def unlike_movie(request, movie_id):
     try:
